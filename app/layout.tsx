@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Free service to check car, vehicle data",
 };
 
-import { ThemeProvider } from 'next-themes'
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
