@@ -21,7 +21,7 @@ export default function VehicleData() {
 
   const clearInput = () => {
     setRegistrationNumber('');
-    setVehicleDetails('');
+    setVehicleDetails(null);
     setMotDetails(null);
     setMotHistory(null);
     localStorage.removeItem('registrationNumber');
