@@ -35,13 +35,14 @@ export default function VehicleData() {
   };
 
 
-
+/*
   const removeFromSuggestions = (reg: string) => {
     const updatedSuggestions = suggestions.filter(s => s !== reg);
     setSuggestions(updatedSuggestions);
     localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
   };
 
+*/
 
   useEffect(() => {
     const savedReg = localStorage.getItem('registrationNumber');
