@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 
 export default function VehicleData() {
   const [registrationNumber, setRegistrationNumber] = useState<string>('');
-  const [vehicleDetails, setVehicleDetails] = useState<VehicleDetails | null>(null);
-  const [motDetails, setMotDetails] = useState<MotTest[] | null>(null);
-  const [motHistory, setMotHistory] = useState<MotHistory | null>(null);
+  const [vehicleDetails, setVehicleDetails] = useState(null);
+  const [motDetails, setMotDetails] = useState(null);
+  const [motHistory, setMotHistory] = useState(null);
   const [error, setError] = useState<string>('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
