@@ -4,12 +4,12 @@
 import { useState, useEffect } from 'react';
 
 export default function VehicleData() {
-  const [registrationNumber, setRegistrationNumber] = useState('');
-  const [vehicleDetails, setVehicleDetails] = useState(null);
-  const [motDetails, setMotDetails] = useState(null);
-  const [motHistory, setMotHistory] = useState(null);
-  const [error, setError] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [registrationNumber, setRegistrationNumber] = useState<string>('');
+  const [vehicleDetails, setVehicleDetails] = useState<VehicleDetails | null>(null);
+  const [motDetails, setMotDetails] = useState<MotTest[] | null>(null);
+  const [motHistory, setMotHistory] = useState<MotHistory | null>(null);
+  const [error, setError] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
 
 
@@ -27,21 +27,21 @@ export default function VehicleData() {
     localStorage.removeItem('registrationNumber');
   }
 
-  
-  const addToSuggestions = (reg:string) => {
-    const updatedSuggestions = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 5);
+
+  const addToSuggestions = (reg: string | null) => {
+    const updatedSuggestions: [] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 5);
     setSuggestions(updatedSuggestions);
     localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
   };
 
 
-/*
-  const removeFromSuggestions = (reg) => {
+
+  const removeFromSuggestions = (reg: string) => {
     const updatedSuggestions = suggestions.filter(s => s !== reg);
     setSuggestions(updatedSuggestions);
     localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
   };
-*/
+
 
   useEffect(() => {
     const savedReg = localStorage.getItem('registrationNumber');
@@ -53,7 +53,7 @@ export default function VehicleData() {
     setSuggestions(savedSuggestions);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setVehicleDetails(null);
@@ -102,14 +102,14 @@ export default function VehicleData() {
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='m-l-2'>
-            {suggestions.map((suggestion, index) => (
+            {suggestions.map((suggestion: string, index: number) => (
               <option key={index} value={suggestion} />
             ))}
           </datalist>
           <button type="submit" className=" w-20 bg-blue-500 text-white p-2 mr-2 rounded-md ">Search</button>
           <button type="button" onClick={clearInput} className=" w-20 bg-blue-500 text-white p-2  rounded-md">Clear</button>
         </form>
-        
+
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
@@ -175,11 +175,12 @@ export default function VehicleData() {
                     {test.testResult}
                   </span>
                   <p className='font-semibold'>Mileage: {test.odometerValue}</p>
-                  <ul className='p-2'>{test.defects && test.defects.map((par, index) =>
+                  <ul className='p-2'>{test.defects && test.defects.map((par: string, index: number) =>
                     <li key={index} >defect type: <span className={par.type === 'ADVISORY' ? 'text-blue-600' : 'text-red-600'}>{par.type}</span>,
                       <p className='ml-2'>details:{par.text}</p>
                     </li>)}
                   </ul>
+
 
                 </li>
               )
