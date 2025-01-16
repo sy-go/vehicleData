@@ -28,7 +28,7 @@ export default function VehicleData() {
   }
 
 
-  const addToSuggestions = (reg: any) => {
+  const addToSuggestions = (reg: string) => {
     const updatedSuggestions: string[] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 5);
     setSuggestions(updatedSuggestions);
     localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
