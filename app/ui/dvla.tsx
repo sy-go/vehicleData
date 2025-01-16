@@ -3,11 +3,45 @@
 
 import { useState, useEffect } from 'react';
 
+interface VehicleDetails {
+  make: string;
+  colour: string;
+  yearOfManufacture: number;
+  monthOfFirstRegistration: string;
+  motStatus: string;
+  motExpiryDate: string;
+  taxStatus: string;
+  taxDueDate: string;
+  engineCapacity: number;
+  fuelType: string;
+  co2Emissions: number;
+  dateOfLastV5CIssued: string;
+  typeApproval: string;
+  wheelplan: string;
+  markedForExport: boolean;
+}
+
+interface MotHistory {
+  model: string;
+}
+
+interface Defect {
+  type: string;
+  text: string;
+}
+
+interface MotTest {
+  completedDate: string;
+  testResult: string;
+  odometerValue: number;
+  defects?: Defect[];
+}
+
 export default function VehicleData() {
   const [registrationNumber, setRegistrationNumber] = useState<string>('');
-  const [vehicleDetails, setVehicleDetails] = useState(null);
-  const [motDetails, setMotDetails] = useState(null);
-  const [motHistory, setMotHistory] = useState(null);
+  const [vehicleDetails, setVehicleDetails] = useState<VehicleDetails | null>(null);;
+  const [motDetails, setMotDetails] = useState<MotTest[] | null>(null);
+  const [motHistory, setMotHistory] = useState<MotHistory | null>(null);
   const [error, setError] = useState<string>('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -35,14 +69,14 @@ export default function VehicleData() {
   };
 
 
-/*
-  const removeFromSuggestions = (reg: string) => {
-    const updatedSuggestions = suggestions.filter(s => s !== reg);
-    setSuggestions(updatedSuggestions);
-    localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
-  };
-
-*/
+  /*
+    const removeFromSuggestions = (reg: string) => {
+      const updatedSuggestions = suggestions.filter(s => s !== reg);
+      setSuggestions(updatedSuggestions);
+      localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
+    };
+  
+  */
 
   useEffect(() => {
     const savedReg = localStorage.getItem('registrationNumber');
@@ -141,22 +175,24 @@ export default function VehicleData() {
                 <li className='p-r-1 '>Wheelplan: </li>
                 <li className='p-r-1 '>Export: </li>
               </ul>
-              <ul className='p-2 '>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.make} {motHistory.model}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.colour}</li>
-                <li className='p-r-1 '>{vehicleDetails && vehicleDetails.yearOfManufacture}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.monthOfFirstRegistration}</li>
-                <li className='p-r-1 '>{vehicleDetails && vehicleDetails.motStatus === 'Valid' ? 'valid' : 'not valid'}</li>
-                <li className='p-r-1 '>{vehicleDetails && new Date(vehicleDetails.motExpiryDate).toLocaleDateString('en-GB')}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.taxStatus}</li>
-                <li className='p-r-1 '>{vehicleDetails && new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.engineCapacity}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.fuelType}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.co2Emissions}</li>
-                <li className='p-r-1 '> {vehicleDetails && new Date(vehicleDetails.dateOfLastV5CIssued).toLocaleDateString('en-GB')}, type: {vehicleDetails && vehicleDetails.typeApproval}</li>
-                <li className='p-r-1 '> {vehicleDetails && vehicleDetails.wheelplan}</li>
-                <li className='p-r-1 '>{vehicleDetails && vehicleDetails.markedForExport === true ? 'yes' : 'no'}</li>
-              </ul>
+              {vehicleDetails && motHistory && (
+                <ul className='p-2'>
+                  <li className='p-r-1'> {vehicleDetails.make} {motHistory.model}</li>
+                  <li className='p-r-1'> {vehicleDetails.colour}</li>
+                  <li className='p-r-1'>{vehicleDetails.yearOfManufacture}</li>
+                  <li className='p-r-1'> {vehicleDetails.monthOfFirstRegistration}</li>
+                  <li className='p-r-1'>{vehicleDetails.motStatus === 'Valid' ? 'valid' : 'not valid'}</li>
+                  <li className='p-r-1'>{new Date(vehicleDetails.motExpiryDate).toLocaleDateString('en-GB')}</li>
+                  <li className='p-r-1'> {vehicleDetails.taxStatus}</li>
+                  <li className='p-r-1'>{new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</li>
+                  <li className='p-r-1'> {vehicleDetails.engineCapacity}</li>
+                  <li className='p-r-1'> {vehicleDetails.fuelType}</li>
+                  <li className='p-r-1'> {vehicleDetails.co2Emissions}</li>
+                  <li className='p-r-1'> {new Date(vehicleDetails.dateOfLastV5CIssued).toLocaleDateString('en-GB')}, type: {vehicleDetails.typeApproval}</li>
+                  <li className='p-r-1'> {vehicleDetails.wheelplan}</li>
+                  <li className='p-r-1'>{vehicleDetails.markedForExport ? 'yes' : 'no'}</li>
+                </ul>
+              )}
             </div>
 
 
@@ -167,7 +203,7 @@ export default function VehicleData() {
           <h2 className="text-xl font-semibold mb-2 pl-8">MOT History</h2>
           <ul>
             {motDetails &&
-              motDetails.map((test, index) =>
+              motDetails.map((test: MotTest, index: number) =>
                 <li key={index} className="mb-2 p-2 border">
                   <span className="font-semibold">Test date: </span>
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}
@@ -176,13 +212,14 @@ export default function VehicleData() {
                     {test.testResult}
                   </span>
                   <p className='font-semibold'>Mileage: {test.odometerValue}</p>
-                  <ul className='p-2'>{test.defects && test.defects.map((par: string, index: number) =>
-                    <li key={index} >defect type: <span className={par.type === 'ADVISORY' ? 'text-blue-600' : 'text-red-600'}>{par.type}</span>,
-                      <p className='ml-2'>details:{par.text}</p>
-                    </li>)}
+                  <ul className='p-2'>
+                    {test.defects && test.defects.map((par: Defect, index: number) =>
+                      <li key={index}>
+                        defect type: <span className={par.type === 'ADVISORY' ? 'text-blue-600' : 'text-red-600'}>{par.type}</span>,
+                        <p className='ml-2'>details: {par.text}</p>
+                      </li>
+                    )}
                   </ul>
-
-
                 </li>
               )
             }
