@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { inter } from '@/app/ui/fonts';
 import "./globals.css";
 import VehicleData from '@/app/ui/dvla'
-import { Analytics } from "@vercel/analytics/react";
+// import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Free Car Data Check",
