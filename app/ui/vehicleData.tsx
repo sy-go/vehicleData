@@ -1,7 +1,5 @@
 'use client'
-import VehMain from "@/app/ui/VehMain";
-import { Suspense } from 'react';
-import { CardSkeleton } from '@/app/ui/skeletons'
+
 import { useState, useEffect } from 'react';
 import { VehicleDetails, MotHistory, Defect, MotTest } from '@/app/lib/types';
 
