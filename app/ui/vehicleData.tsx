@@ -86,7 +86,7 @@ export default function VehicleData() {
   return (
     <div className=" w-full p-2">
       <div className="p-2 md:p-6">
-        <div className=" mb-4 text-center">
+        <div className=" mb-4 text-center justify-center">
           <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 ">Vehicle+MOT</span>
           <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 ">Checker</span>
         </div>
@@ -96,7 +96,7 @@ export default function VehicleData() {
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
             placeholder="Vehicle registration"
-            className="w-96 p-4 mr-2 bg-amber-400 text-black text-2xl focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md"
+            className="w-5/6 p-4 mr-2 bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-80"
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='m-l-2'>
@@ -104,8 +104,12 @@ export default function VehicleData() {
               <option key={index} value={suggestion} />
             ))}
           </datalist>
-          <button type="submit" className=" w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md ">Search</button>
-          <button type="button" onClick={clearInput} className=" w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
+          <div>
+            <button type="submit" className=" w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md ">Search</button>
+            <button type="button" onClick={clearInput} className=" w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
+          </div>
+
+
         </form>
 
       </div>
