@@ -95,8 +95,8 @@ export default function VehicleData() {
             type="text"
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
-            placeholder="Enter registration number"
-            className="w-60 p-2 mr-2 bg-amber-400 text-black  focus:border-green-600  text-center font-semibold placeholder-gray-500 rounded-md"
+            placeholder="Vehicle registration"
+            className="w-96 p-4 mr-2 bg-amber-400 text-black text-2xl focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md"
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='m-l-2'>
@@ -104,8 +104,8 @@ export default function VehicleData() {
               <option key={index} value={suggestion} />
             ))}
           </datalist>
-          <button type="submit" className=" w-20 m-2 bg-blue-500 text-white p-2 mr-2 rounded-md ">Search</button>
-          <button type="button" onClick={clearInput} className=" w-20 m-2 bg-blue-500 text-white p-2  rounded-md">Clear</button>
+          <button type="submit" className=" w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md ">Search</button>
+          <button type="button" onClick={clearInput} className=" w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
         </form>
 
       </div>
@@ -121,59 +121,59 @@ export default function VehicleData() {
                 <tbody>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Make and model:</td>
-                    <td>{vehicleDetails.make} {motHistory.model}</td>
+                    <td className='font-semibold'>{vehicleDetails.make} {motHistory.model}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Year manufactured:</td>
-                    <td>{vehicleDetails.yearOfManufacture}</td>
+                    <td className='font-semibold'>{vehicleDetails.yearOfManufacture}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm  text-right'>First registered:</td>
-                    <td>{vehicleDetails.monthOfFirstRegistration}</td>
+                    <td className='font-semibold'>{vehicleDetails.monthOfFirstRegistration}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>MOT:</td>
-                    <td> {vehicleDetails.motStatus === 'Valid' ? 'valid' : ' not valid'}</td>
+                    <td className='font-semibold'> {vehicleDetails.motStatus === 'Valid' ? 'valid' : ' not valid'}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>MOT Expires at:</td>
-                    <td>{new Date(vehicleDetails.motExpiryDate).toLocaleDateString('en-GB')}</td>
+                    <td className='font-semibold'>{new Date(vehicleDetails.motExpiryDate).toLocaleDateString('en-GB')}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Road tax status:</td>
-                    <td>{vehicleDetails.taxStatus}</td>
+                    <td className='font-semibold'>{vehicleDetails.taxStatus}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Road tax renewal date:</td>
-                    <td>{new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</td>
+                    <td className='font-semibold'>{new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Colour:</td>
-                    <td>{vehicleDetails.colour}</td>
+                    <td className='font-semibold'>{vehicleDetails.colour}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Fuel:</td>
-                    <td>{vehicleDetails.fuelType}</td>
+                    <td className='font-semibold'>{vehicleDetails.fuelType}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Engine size in ccm:</td>
-                    <td>{vehicleDetails.engineCapacity}</td>
+                    <td className='font-semibold'>{vehicleDetails.engineCapacity}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>CO2 emissions:</td>
-                    <td>{vehicleDetails.co2Emissions}</td>
+                    <td className='font-semibold'>{vehicleDetails.co2Emissions}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Last V5 issued on:</td>
-                    <td>{new Date(vehicleDetails.dateOfLastV5CIssued).toLocaleDateString('en-GB')}, type: {vehicleDetails.typeApproval}</td>
+                    <td className='font-semibold'>{new Date(vehicleDetails.dateOfLastV5CIssued).toLocaleDateString('en-GB')}, type: {vehicleDetails.typeApproval}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Wheelplan:</td>
-                    <td>{vehicleDetails.wheelplan}</td>
+                    <td className='font-semibold'>{vehicleDetails.wheelplan}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Export:</td>
-                    <td>{vehicleDetails.markedForExport ? 'yes' : 'no'}</td>
+                    <td className='font-semibold'>{vehicleDetails.markedForExport ? 'yes' : 'no'}</td>
                   </tr>
                 </tbody>
 
@@ -196,10 +196,10 @@ export default function VehicleData() {
         <div className="w-full md:w-1/2 px-2 mb-4 ">
           <h2 className="text-xl font-semibold mb-2 ">MOT History</h2>
 
-          <ul className="mb-4 md:mr-8 p-2  bg-blue-900  rounded-md ">
+          <ul className="mb-4  md:mr-8   bg-blue-950  rounded-md ">
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
-                <li key={index} className="mb-4 p-2  bg-blue-900  rounded-md ">
+                <li key={index} className="mb-4 p-4  bg-blue-900  rounded-md ">
                   <span className="font-semibold">Test date: </span>
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}
                   <span className="ml-2 font-semibold">Result: </span>
