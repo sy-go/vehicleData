@@ -4,7 +4,7 @@ import VehicleData from '@/app/ui/vehicleData';
 
 export default function Home() {
   return (
-    <div className="bg-blue-950 text-gray-50 min-h-screen h-full flex flex-col">
+    <div className="bg-slate-800 text-gray-50 min-h-screen h-full flex flex-col">
       <main className="flex-grow flex flex-col items-center sm:items-start">
         
           <VehicleData />

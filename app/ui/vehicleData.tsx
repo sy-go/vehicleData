@@ -1,7 +1,12 @@
 'use client'
 
+
 import { useState, useEffect } from 'react';
 import { VehicleDetails, MotHistory, Defect, MotTest } from '@/app/lib/types';
+import { redirect } from 'next/dist/server/api-utils';
+import { useRouter } from 'next/navigation';
+
+
 
 export default function VehicleData() {
   const [registrationNumber, setRegistrationNumber] = useState<string>('');
@@ -10,7 +15,7 @@ export default function VehicleData() {
   const [motHistory, setMotHistory] = useState<MotHistory | null>(null);
   const [error, setError] = useState<string>('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-
+  const router = useRouter();
 
   useEffect(() => {
     localStorage.setItem('registrationNumber', registrationNumber);
@@ -18,11 +23,18 @@ export default function VehicleData() {
 
   const clearInput = () => {
     setRegistrationNumber('');
-    setVehicleDetails(null);
-    setMotDetails(null);
-    setMotHistory(null);
-    localStorage.removeItem('registrationNumber');
+      setVehicleDetails(null);
+      setMotDetails(null);
+      setMotHistory(null);
+      localStorage.removeItem('registrationNumber');
+      window.location.replace('/')
   }
+
+  useEffect(() => {
+    if (registrationNumber === '' && !vehicleDetails && !motDetails && !motHistory) {
+      router.replace('/');
+    }
+  }, [registrationNumber, vehicleDetails, motDetails, motHistory]);
 
   const addToSuggestions = (reg: string) => {
     const updatedSuggestions: string[] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 5);
@@ -69,7 +81,10 @@ export default function VehicleData() {
 
       if (!vehicleResponse.ok || !motResponse.ok) {
         throw new Error('Failed to fetch data');
+        router.replace('/');
       }
+
+
 
       const vehicleData = await vehicleResponse.json();
       const motData = await motResponse.json();
@@ -79,12 +94,22 @@ export default function VehicleData() {
       setMotDetails(motData.motTests)
     } catch (err) {
       setError('An error occurred while fetching data');
-      console.error(err);
+
+      // Clear state and force full reload
+      setRegistrationNumber('');
+      setVehicleDetails(null);
+      setMotDetails(null);
+      setMotHistory(null);
+      localStorage.removeItem('registrationNumber');
+      
+      setTimeout(() => {
+        window.location.replace('/');
+      }, 2000);
     }
   };
 
   return (
-    <div className=" w-full p-2">
+    <div className=" w-full m-2">
       <div className="p-2 md:p-6">
         <div className=" mb-4 text-center justify-center">
           <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 ">Vehicle+MOT</span>
@@ -95,8 +120,8 @@ export default function VehicleData() {
             type="text"
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
-            placeholder="Vehicle registration"
-            className="w-5/6 p-4 mr-2 bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-80"
+            placeholder="Type Vehicle registration"
+            className="w-4/6  bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-xl md:w-96 p-4"
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='m-l-2'>
@@ -104,22 +129,19 @@ export default function VehicleData() {
               <option key={index} value={suggestion} />
             ))}
           </datalist>
-          <div>
-            <button type="submit" className=" w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md ">Search</button>
-            <button type="button" onClick={clearInput} className=" w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
+          <div className='justify-center'>
+            <button type="submit" className="focus:outline-none focus:ring focus:ring-blue-300 w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md hover:">Search</button>
+            <button type="button" onClick={clearInput} className="focus:outline-none focus:ring focus:ring-blue-300 w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
           </div>
-
-
         </form>
-
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
-      <div className="flex flex-wrap justify-center -mx-2 pt-8  ">
+      <div className="  justify-center p-2 md:flex pt-8 m-2 ">
 
-        <div className="w-full md:w-1/2 px-2 mb-4 ">
-          <h2 className="text-xl font-semibold mb-2 pl-8">Vehicle details</h2>
-          <div className="mb-4 md:mr-8 p-2  bg-blue-900  rounded-md ">
+        <div className="w-full  md:w-2/5   mb-4 ">
+          <h2 className="text-xl font-semibold mb-2 pl-8 text-center">Vehicle details</h2>
+          <div className="m-2 mb-8  p-2  bg-slate-700  rounded-md ">
             {vehicleDetails && motHistory ? (
               <table>
                 <tbody>
@@ -184,9 +206,9 @@ export default function VehicleData() {
               </table>
             ) : (
               <div className=" space-y-4">
-                <div >Make and model:<p className="h-6 bg-sky-700 rounded w-3/4 animate-pulse"></p></div>
-                <div >Year manufactured:<p className="h-6 bg-sky-700 rounded w-1/2 animate-pulse"></p></div>
-                <div >First registered: <p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
+                <div >Make and model:<p className="h-6 bg-sky-700 rounded w-3/4 animate-pulse text-sm pl-4">....</p></div>
+                <div >Year manufactured:<p className="h-6 bg-sky-700 rounded w-1/2 animate-pulse pl-4">....</p></div>
+                <div >First registered: <p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse pl-4">....</p></div>
                 <div >MOT:<p className="h-6 bg-sky-700 rounded w-2/3 animate-pulse"></p></div>
                 <div >MOT Expires at:<p className="h-4 bg-sky-700 rounded w-3/4 animate-pulse"></p></div>
                 <div >Road tax status:<p className="h-4 bg-sky-700 rounded w-1/2 animate-pulse"></p></div>
@@ -197,13 +219,13 @@ export default function VehicleData() {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 px-2 mb-4 ">
-          <h2 className="text-xl font-semibold mb-2 ">MOT History</h2>
+        <div className="w-full md:w-2/5  mb-4 ">
+          <h2 className="text-xl font-semibold mb-2 text-center">MOT History</h2>
 
-          <ul className="mb-4  md:mr-8   bg-blue-950  rounded-md ">
+          <ul className="m-2 mb-4 bg-slate-800  rounded-md ">
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
-                <li key={index} className="mb-4 p-4  bg-blue-900  rounded-md ">
+                <li key={index} className="mb-4 p-4  bg-slate-700  rounded-md ">
                   <span className="font-semibold">Test date: </span>
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}
                   <span className="ml-2 font-semibold">Result: </span>
@@ -223,14 +245,14 @@ export default function VehicleData() {
               ))
             ) : (
               [...Array(3)].map((_, index) => (
-                <li key={index} className="mb-4 p-2 bg-blue-900  rounded-md  animate-pulse">
+                <li key={index} className="mb-4 p-2 bg-slate-700  rounded-md  ">
                   <div></div>
-                  <div >Test date<p className="h-8 bg-sky-700 rounded w-1/4 mb-2"></p></div>
-                  <div >Result<p className="h-8 bg-sky-700 rounded w-1/4 mb-2"></p></div>
-                  <div >Mileage<p className="h-8 bg-sky-700 rounded w-1/4 mb-2"></p></div>
+                  <div >Test date<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Result<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Mileage<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div className="space-y-2 mt-4">
-                    <div >defect type<p className="h-6 bg-sky-700 rounded w-5/6"></p></div>
-                    <div ><p className="h-6 bg-sky-700 rounded w-5/6"></p></div>
+                    <div >defect type<p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
+                    <div ><p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
                   </div>
                 </li>
               ))
