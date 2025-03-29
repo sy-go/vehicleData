@@ -38,7 +38,7 @@ async function getAccessToken() {
   }
 
   const data = await response.json();
-  // console.log(data)
+   // console.log(data)
    
   cachedToken = data.access_token;
   tokenExpiration = now + (data.expires_in * 1000);

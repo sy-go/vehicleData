@@ -19,11 +19,11 @@ export default function VehicleData() {
 
   const clearInput = () => {
     setRegistrationNumber('');
-      setVehicleDetails(null);
-      setMotDetails(null);
-      setMotHistory(null);
-      localStorage.removeItem('registrationNumber');
-      window.location.replace('/')
+    setVehicleDetails(null);
+    setMotDetails(null);
+    setMotHistory(null);
+    localStorage.removeItem('registrationNumber');
+    window.location.replace('/')
   }
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function VehicleData() {
       ]);
 
       if (!vehicleResponse.ok || !motResponse.ok) {
-        throw new Error('Failed to fetch data');       
+        throw new Error('Failed to fetch data');
       }
       const vehicleData = await vehicleResponse.json();
       const motData = await motResponse.json();
@@ -85,7 +85,7 @@ export default function VehicleData() {
       setMotHistory(motData);
       setMotDetails(motData.motTests)
     } catch (err) {
-      setError(`An error occurred while fetching data, error: ${err}`);
+      setError(`>>> MISSING VEHICLE REGISTRATION <<<`);
 
       // Clear state and force full reload
       setRegistrationNumber('');
@@ -93,7 +93,7 @@ export default function VehicleData() {
       setMotDetails(null);
       setMotHistory(null);
       localStorage.removeItem('registrationNumber');
-      
+
       setTimeout(() => {
         window.location.replace('/');
       }, 2000);
@@ -101,7 +101,7 @@ export default function VehicleData() {
   };
 
   return (
-    <div className=" w-full m-2">
+    <div className=" w-full ">
       <div className="p-2 md:p-6">
         <div className=" mb-4 text-center justify-center">
           <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 ">Vehicle+MOT</span>
@@ -113,7 +113,7 @@ export default function VehicleData() {
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
             placeholder="Type Vehicle registration"
-            className="w-4/6  bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-xl md:w-96 p-4"
+            className="w-5/6  bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-xl md:w-96 p-4"
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='m-l-2'>
@@ -127,13 +127,11 @@ export default function VehicleData() {
           </div>
         </form>
       </div>
-
       {error && <p className="text-red-500">{error}</p>}
-      <div className="  justify-center p-2 md:flex pt-8 m-2 ">
-
-        <div className="w-full  md:w-2/5   mb-4 ">
-          <h2 className="text-xl font-semibold mb-2 pl-8 text-center">Vehicle details</h2>
-          <div className="m-2 mb-8  p-2  bg-slate-700  rounded-md ">
+      <div className="  justify-center  md:flex pt-8  ">
+        <div className="  h-4/5 md:w-2/5 bg-slate-700  rounded-md m-2 mb-4  ">
+          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b">Vehicle details</h2>
+          <div className="mb-4 p-2  bg-slate-700   rounded-md">
             {vehicleDetails && motHistory ? (
               <table>
                 <tbody>
@@ -151,11 +149,7 @@ export default function VehicleData() {
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>MOT:</td>
-                    <td className='font-semibold'> {vehicleDetails.motStatus === 'Valid' ? 'valid' : ' not valid'}</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-2 text-sm text-right'>MOT Expires at:</td>
-                    <td className='font-semibold'>{new Date(vehicleDetails.motExpiryDate).toLocaleDateString('en-GB')}</td>
+                    <td className='font-semibold'> {vehicleDetails.motStatus === 'Valid' ? 'valid' : ' no data'}</td>
                   </tr>
                   <tr>
                     <td className='pr-2 text-sm text-right'>Road tax status:</td>
@@ -194,13 +188,12 @@ export default function VehicleData() {
                     <td className='font-semibold'>{vehicleDetails.markedForExport ? 'yes' : 'no'}</td>
                   </tr>
                 </tbody>
-
               </table>
             ) : (
               <div className=" space-y-4">
-                <div >Make and model:<p className="h-6 bg-sky-700 rounded w-3/4 animate-pulse text-sm pl-4">....</p></div>
-                <div >Year manufactured:<p className="h-6 bg-sky-700 rounded w-1/2 animate-pulse pl-4">....</p></div>
-                <div >First registered: <p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse pl-4">....</p></div>
+                <div >Make and model:<p className="h-6 bg-sky-700 rounded w-3/4 animate-pulse text-sm pl-4"></p></div>
+                <div >Year manufactured:<p className="h-6 bg-sky-700 rounded w-1/2 animate-pulse pl-4"></p></div>
+                <div >First registered: <p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse pl-4"></p></div>
                 <div >MOT:<p className="h-6 bg-sky-700 rounded w-2/3 animate-pulse"></p></div>
                 <div >MOT Expires at:<p className="h-4 bg-sky-700 rounded w-3/4 animate-pulse"></p></div>
                 <div >Road tax status:<p className="h-4 bg-sky-700 rounded w-1/2 animate-pulse"></p></div>
@@ -210,26 +203,24 @@ export default function VehicleData() {
             )}
           </div>
         </div>
-
-        <div className="w-full md:w-2/5  mb-4 ">
-          <h2 className="text-xl font-semibold mb-2 text-center">MOT History</h2>
-
-          <ul className="m-2 mb-4 bg-slate-800  rounded-md ">
+        <div className=" md:w-2/5  bg-slate-700  rounded-md m-2 mb-4 ">
+          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b">MOT History</h2>
+          <ul className=" mb-4 ">
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
-                <li key={index} className="mb-4 p-4  bg-slate-700  rounded-md ">
+                <li key={index} className="mb-4 p-4  bg-slate-700   border-b last:border-b-0 last:rounded-md">
                   <span className="font-semibold">Test date: </span>
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}
-                  <span className="ml-2 font-semibold">Result: </span>
-                  <span className={test.testResult === 'PASSED' ? 'text-green-300 font-extrabold' : 'text-red-400 font-extrabold'}>
+                  <p className="font-semibold">Result: <span className={test.testResult === 'PASSED' ? 'text-green-300 font-extrabold' : 'text-red-400 font-extrabold'}>
                     {test.testResult}
-                  </span>
+                  </span></p>
+
                   <p className='font-semibold'>Mileage: {test.odometerValue}</p>
                   <ul className='p-2'>
                     {test.defects && test.defects.map((par: Defect, index: number) => (
                       <li key={index}>
                         defect type: <span className={par.type === 'ADVISORY' ? 'text-amber-400 font-extrabold' : 'text-rose-400 font-extrabold'}>{par.type}</span>,
-                        <p className='ml-4'>details: {par.text}</p>
+                        <p className='ml-8 text-sm'>details: {par.text}</p>
                       </li>
                     ))}
                   </ul>
@@ -237,14 +228,13 @@ export default function VehicleData() {
               ))
             ) : (
               [...Array(3)].map((_, index) => (
-                <li key={index} className="mb-4 p-2 bg-slate-700  rounded-md  ">
-                  <div></div>
-                  <div >Test date<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
-                  <div >Result<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
-                  <div >Mileage<p className="h-8 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                <li key={index} className="mb-4 p-2 pb-4 bg-slate-700 last:rounded-md border-b last:border-b-0 ">
+                  <div >Test date<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse "></p></div>
+                  <div >Result<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Mileage<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div className="space-y-2 mt-4">
-                    <div >defect type<p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
-                    <div ><p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
+                    <div >defect type<p className="h-4 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
+                    <div ><p className="h-4 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
                   </div>
                 </li>
               ))
