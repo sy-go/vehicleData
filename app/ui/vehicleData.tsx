@@ -106,10 +106,10 @@ export default function VehicleData() {
 
   return (
     <div className=" w-full ">
-      <div className="p-2 md:p-6">
+      <div className="p-2  mt-2 md:mt-4 md:p-6">
         <div className=" mb-4 text-center justify-center">
-          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 ">Vehicle+MOT</span>
-          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 ">Checker</span>
+          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-8 ">Vehicle+MOT</span>
+          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-8 ">Checker</span>
         </div>
         <form onSubmit={handleSubmit} className="text-center mt-8">
           <input
@@ -132,7 +132,7 @@ export default function VehicleData() {
         </form>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      <div className="  justify-center  md:flex pt-8  ">
+      <div className="  justify-center  md:flex pt-4  lg:pt-8 ">
         <div className="  h-4/5 md:w-2/5 bg-slate-700  rounded-md m-2 mb-4  ">
           <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b">Vehicle details</h2>
           <div className="mb-4 p-2  bg-slate-700   rounded-md">
@@ -221,15 +221,16 @@ export default function VehicleData() {
                   <span className='text-sm'>Test date: </span>
                   <span className="font-semibold">
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}</span>
+                  
+
+                  <p className='text-sm'>Mileage: <span className='font-semibold'>{test.odometerValue}</span></p>
                   <p className='text-sm'>Result: <span className={test.testResult === 'PASSED' ? 'text-green-300 font-extrabold' : 'text-red-400 font-extrabold'}>
                     {test.testResult}
                   </span></p>
-
-                  <p className='text-sm'>Mileage: <span className='font-semibold'>{test.odometerValue}</span></p>
                   <ul className='p-2'>
                     {test.defects && test.defects.map((par: Defect, index: number) => (
                       <li key={index}>
-                        defect type: <span className={par.type === 'ADVISORY' ? 'text-amber-400 font-extrabold' : 'text-rose-400 font-extrabold'}>{par.type}</span>,
+                        <span className='text-sm'>defect type:</span> <span className={par.type === 'ADVISORY' ? 'text-amber-400 font-extrabold' : 'text-rose-400 font-extrabold'}>{par.type}</span>,
                         <p className='ml-8 text-sm'>details: {par.text}</p>
                       </li>
                     ))}

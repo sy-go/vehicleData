@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   description: "Free service to check car, mot check, vehicle data",
 };
 
-
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
