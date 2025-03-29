@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { inter } from '@/app/ui/fonts';
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-// import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Free vehicle data check",
@@ -16,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className}`}>
           {children}     
+          <Analytics debug={true}/>
       </body>
     </html>
   )
