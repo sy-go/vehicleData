@@ -8,11 +8,12 @@ export default function Home() {
       <main className="flex-grow flex flex-col items-center sm:items-start">
         
           <VehicleData />
-       
-        
+                 
       </main>
       <footer className="mt-auto w-full">
-        <p className="text-center py-2 text-sm">Created and maintained by @gozky</p>
+        <p className="text-center py-2 text-sm" >&copy; Created and maintained by
+          <a  href="mailto:gozky@example.com" 
+          className='text-blue-500 hover:underline'> @gozky</a></p>
       </footer>
     </div>
   );

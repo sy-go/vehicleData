@@ -56,6 +56,7 @@ export default function VehicleData() {
     setSuggestions(savedSuggestions);
   }, []);
 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
@@ -78,13 +79,15 @@ export default function VehicleData() {
       if (!vehicleResponse.ok || !motResponse.ok) {
         throw new Error('Failed to fetch data');
       }
-      
+
       const vehicleData = await vehicleResponse.json();
       const motData = await motResponse.json();
 
+
       setVehicleDetails(vehicleData);
       setMotHistory(motData);
-      setMotDetails(motData.motTests)
+      setMotDetails(motData.motTests);
+
     } catch (err) {
       setError(`**${err} - MISSING VEHICLE REGISTRATION**`);
 
@@ -149,18 +152,6 @@ export default function VehicleData() {
                     <td className='font-semibold'>{vehicleDetails.monthOfFirstRegistration}</td>
                   </tr>
                   <tr>
-                    <td className='pr-2 text-sm text-right'>MOT:</td>
-                    <td className='font-semibold'> {vehicleDetails.motStatus === 'Valid' ? 'valid' : ' no data'}</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-2 text-sm text-right'>Road tax status:</td>
-                    <td className='font-semibold'>{vehicleDetails.taxStatus}</td>
-                  </tr>
-                  <tr>
-                    <td className='pr-2 text-sm text-right'>Road tax renewal date:</td>
-                    <td className='font-semibold'>{new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</td>
-                  </tr>
-                  <tr>
                     <td className='pr-2 text-sm text-right'>Colour:</td>
                     <td className='font-semibold'>{vehicleDetails.colour}</td>
                   </tr>
@@ -176,6 +167,23 @@ export default function VehicleData() {
                     <td className='pr-2 text-sm text-right'>CO2 emissions:</td>
                     <td className='font-semibold'>{vehicleDetails.co2Emissions}</td>
                   </tr>
+                  <tr>
+                    <td className='pr-2 text-sm text-right'>MOT:</td>
+                    <td className='font-semibold'> {
+                      !vehicleDetails.motStatus ? 'no data' :
+                        vehicleDetails.motStatus === 'Valid' ? 'valid' : 'not valid'}</td>
+                  </tr>
+                  <tr>
+                    <td className='pr-2 text-sm text-right'>Road tax status:</td>
+                    <td className='font-semibold'>{vehicleDetails.taxStatus}</td>
+                  </tr>
+                  <tr>
+                    <td className='pr-2 text-sm text-right'>Road tax renewal date:</td>
+                    <td className='font-semibold'>{
+                      !vehicleDetails.taxDueDate ? 'no data'
+                        : new Date(vehicleDetails.taxDueDate).toLocaleDateString('en-GB')}</td>
+                  </tr>
+
                   <tr>
                     <td className='pr-2 text-sm text-right'>Last V5 issued on:</td>
                     <td className='font-semibold'>{new Date(vehicleDetails.dateOfLastV5CIssued).toLocaleDateString('en-GB')}, type: {vehicleDetails.typeApproval}</td>
@@ -210,13 +218,14 @@ export default function VehicleData() {
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
                 <li key={index} className="mb-4 p-4  bg-slate-700   border-b last:border-b-0 last:rounded-md">
-                  <span className="font-semibold">Test date: </span>
-                  {new Date(test.completedDate).toLocaleDateString('en-GB')}
-                  <p className="font-semibold">Result: <span className={test.testResult === 'PASSED' ? 'text-green-300 font-extrabold' : 'text-red-400 font-extrabold'}>
+                  <span className='text-sm'>Test date: </span>
+                  <span className="font-semibold">
+                  {new Date(test.completedDate).toLocaleDateString('en-GB')}</span>
+                  <p className='text-sm'>Result: <span className={test.testResult === 'PASSED' ? 'text-green-300 font-extrabold' : 'text-red-400 font-extrabold'}>
                     {test.testResult}
                   </span></p>
 
-                  <p className='font-semibold'>Mileage: {test.odometerValue}</p>
+                  <p className='text-sm'>Mileage: <span className='font-semibold'>{test.odometerValue}</span></p>
                   <ul className='p-2'>
                     {test.defects && test.defects.map((par: Defect, index: number) => (
                       <li key={index}>
