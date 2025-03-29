@@ -78,6 +78,7 @@ export default function VehicleData() {
       if (!vehicleResponse.ok || !motResponse.ok) {
         throw new Error('Failed to fetch data');
       }
+      
       const vehicleData = await vehicleResponse.json();
       const motData = await motResponse.json();
 
@@ -85,7 +86,7 @@ export default function VehicleData() {
       setMotHistory(motData);
       setMotDetails(motData.motTests)
     } catch (err) {
-      setError(`>>> MISSING VEHICLE REGISTRATION <<<`);
+      setError(`**${err} - MISSING VEHICLE REGISTRATION**`);
 
       // Clear state and force full reload
       setRegistrationNumber('');
