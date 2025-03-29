@@ -1,12 +1,8 @@
 'use client'
 
-
 import { useState, useEffect } from 'react';
 import { VehicleDetails, MotHistory, Defect, MotTest } from '@/app/lib/types';
-import { redirect } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/navigation';
-
-
 
 export default function VehicleData() {
   const [registrationNumber, setRegistrationNumber] = useState<string>('');
@@ -80,12 +76,8 @@ export default function VehicleData() {
       ]);
 
       if (!vehicleResponse.ok || !motResponse.ok) {
-        throw new Error('Failed to fetch data');
-        router.replace('/');
+        throw new Error('Failed to fetch data');       
       }
-
-
-
       const vehicleData = await vehicleResponse.json();
       const motData = await motResponse.json();
 
@@ -93,7 +85,7 @@ export default function VehicleData() {
       setMotHistory(motData);
       setMotDetails(motData.motTests)
     } catch (err) {
-      setError('An error occurred while fetching data');
+      setError(`An error occurred while fetching data, error: ${err}`);
 
       // Clear state and force full reload
       setRegistrationNumber('');
