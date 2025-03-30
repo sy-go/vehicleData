@@ -108,8 +108,8 @@ export default function VehicleData() {
     <div className=" w-full ">
       <div className="p-2  mt-2 md:mt-4 md:p-6">
         <div className=" mb-4 text-center justify-center">
-          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-8 ">Vehicle+MOT</span>
-          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-8 ">Checker</span>
+          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-4 ">Vehicle+MOT</span>
+          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-4 ">Checker</span>
         </div>
         <form onSubmit={handleSubmit} className="text-center mt-8">
           <input
