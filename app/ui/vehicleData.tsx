@@ -30,7 +30,7 @@ export default function VehicleData() {
     if (registrationNumber === '' && !vehicleDetails && !motDetails && !motHistory) {
       router.replace('/');
     }
-  }, [registrationNumber, vehicleDetails, motDetails, motHistory]);
+  }, [registrationNumber, vehicleDetails, motDetails, motHistory, router]);
 
   const addToSuggestions = (reg: string) => {
     const updatedSuggestions: string[] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 10);
