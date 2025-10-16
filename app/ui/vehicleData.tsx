@@ -33,7 +33,7 @@ export default function VehicleData() {
   }, [registrationNumber, vehicleDetails, motDetails, motHistory]);
 
   const addToSuggestions = (reg: string) => {
-    const updatedSuggestions: string[] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 5);
+    const updatedSuggestions: string[] = [reg, ...suggestions.filter(s => s !== reg)].slice(0, 10);
     setSuggestions(updatedSuggestions);
     localStorage.setItem('regSuggestions', JSON.stringify(updatedSuggestions));
   };
@@ -106,21 +106,22 @@ export default function VehicleData() {
 
   return (
     <div className=" w-full ">
-      <div className="p-2  mt-2 md:mt-4 md:p-6">
+      <div className="p-2  mt-2 md:mt-2 md:p-2">
         <div className=" mb-4 text-center justify-center">
-          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-4 ">Vehicle+MOT</span>
-          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-4 ">Checker</span>
+          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-4 ">Vehicle & MOT</span>
+          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-4 ">Lookup</span>
         </div>
         <form onSubmit={handleSubmit} className="text-center mt-8">
           <input
             type="text"
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
-            placeholder="Type Vehicle registration"
-            className="w-5/6  bg-amber-400 text-black  focus:border-green-600  text-center font-extrabold placeholder-gray-500 rounded-md md:text-xl md:w-96 p-4"
+            placeholder="vehicle registration"
+            className="w-3/6 h-16 placeholder:text-sm bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2"
             list="regSuggestions"
           />
-          <datalist id="regSuggestions" className='m-l-2'>
+          <datalist id="regSuggestions" className='
+          m-0 p-0'>
             {suggestions.map((suggestion: string, index: number) => (
               <option key={index} value={suggestion} />
             ))}
@@ -133,9 +134,9 @@ export default function VehicleData() {
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <div className="  justify-center  md:flex pt-4  lg:pt-8 ">
-        <div className="  h-4/5 md:w-2/5 bg-slate-700  rounded-md m-2 mb-4  ">
-          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b">Vehicle details</h2>
-          <div className="mb-4 p-2  bg-slate-700   rounded-md">
+        <div className="  h-4/5 md:w-2/5 bg-slate-800 border border-slate-500 rounded-md m-2 mb-4  ">
+          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b  border-slate-500">Vehicle details</h2>
+          <div className="mb-4 p-2  bg-slate-800   rounded-md">
             {vehicleDetails && motHistory ? (
               <table>
                 <tbody>
@@ -212,12 +213,12 @@ export default function VehicleData() {
             )}
           </div>
         </div>
-        <div className=" md:w-2/5  bg-slate-700  rounded-md m-2 mb-4 ">
-          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b">MOT History</h2>
+        <div className=" md:w-2/5  bg-slate-800 border border-slate-500  rounded-md m-2 mb-4 ">
+          <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b border-slate-500">MOT History</h2>
           <ul className=" mb-4 ">
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
-                <li key={index} className="mb-4 p-4  bg-slate-700   border-b last:border-b-0 last:rounded-md">
+                <li key={index} className="mb-4 p-4  bg-slate-800   border-b last:border-b-0 last:rounded-md">
                   <span className='text-sm'>Test date: </span>
                   <span className="font-semibold">
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}</span>
