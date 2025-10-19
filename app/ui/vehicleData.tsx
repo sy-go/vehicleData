@@ -201,14 +201,14 @@ export default function VehicleData() {
               </table>
             ) : (
               <div className=" space-y-4">
-                <div >Make and model:<p className="h-6 bg-sky-700 rounded w-3/4 animate-pulse text-sm pl-4"></p></div>
-                <div >Year manufactured:<p className="h-6 bg-sky-700 rounded w-1/2 animate-pulse pl-4"></p></div>
-                <div >First registered: <p className="h-6 bg-sky-700 rounded w-5/6 animate-pulse pl-4"></p></div>
-                <div >MOT:<p className="h-6 bg-sky-700 rounded w-2/3 animate-pulse"></p></div>
-                <div >MOT Expires at:<p className="h-4 bg-sky-700 rounded w-3/4 animate-pulse"></p></div>
-                <div >Road tax status:<p className="h-4 bg-sky-700 rounded w-1/2 animate-pulse"></p></div>
-                <div >Road tax renewal date:<p className="h-4 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
-                <div >Colour:<p className="h-4 bg-sky-700 rounded w-1/4 animate-pulse  "></p></div>
+                <div >Make and model:<p className="h-6 bg-sky-900  rounded w-3/4 animate-pulse text-sm pl-4" ></p></div>
+                <div >Year manufactured:<p className="h-6 bg-sky-900 rounded w-1/2 animate-pulse pl-4"></p></div>
+                <div >First registered: <p className="h-6 bg-sky-900 rounded w-5/6 animate-pulse pl-4"></p></div>
+                <div >MOT:<p className="h-6 bg-sky-900 rounded w-2/3 animate-pulse"></p></div>
+                <div >MOT Expires at:<p className="h-4 bg-sky-900 rounded w-3/4 animate-pulse"></p></div>
+                <div >Road tax status:<p className="h-4 bg-sky-900 rounded w-1/2 animate-pulse"></p></div>
+                <div >Road tax renewal date:<p className="h-4 bg-sky-900 rounded w-5/6 animate-pulse"></p></div>
+                <div >Colour:<p className="h-4 bg-sky-900 rounded w-1/4 animate-pulse  "></p></div>
               </div>
             )}
           </div>
@@ -241,12 +241,12 @@ export default function VehicleData() {
             ) : (
               [...Array(3)].map((_, index) => (
                 <li key={index} className="mb-4 p-2 pb-4 bg-slate-800 last:rounded-md border-b last:border-b-0 ">
-                  <div >Test date<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
-                  <div >Result<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
-                  <div >Mileage<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Test date<p className="h-6 bg-sky-900 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Result<p className="h-6 bg-sky-900 rounded w-1/4 mb-2 animate-pulse"></p></div>
+                  <div >Mileage<p className="h-6 bg-sky-900 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div className="space-y-2 mt-4">
-                    <div >defect type<p className="h-4 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
-                    <div ><p className="h-4 bg-sky-700 rounded w-5/6 animate-pulse"></p></div>
+                    <div >defect type<p className="h-4 bg-sky-900 rounded w-5/6 animate-pulse"></p></div>
+                    <div ><p className="h-4 bg-sky-900 rounded w-5/6 animate-pulse"></p></div>
                   </div>
                 </li>
               ))
