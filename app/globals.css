@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.loading-sequence::after {
+  animation: loadingText 3.5s steps(1, end) infinite;
+  content: 'L';
+  white-space: nowrap;
+}

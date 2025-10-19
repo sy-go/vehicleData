@@ -89,7 +89,7 @@ export default function VehicleData() {
       setMotDetails(motData.motTests);
 
     } catch (err) {
-      setError(`**${err} - MISSING VEHICLE REGISTRATION**`);
+      setError(`**${err} -INVALID VEHICLE REGISTRATION**`);
 
       // Clear state and force full reload
       setRegistrationNumber('');
@@ -116,7 +116,7 @@ export default function VehicleData() {
             type="text"
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
-            placeholder="vehicle registration"
+            placeholder="enter VRN"
             className="w-3/6 h-16 placeholder:text-sm bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2"
             list="regSuggestions"
           />
@@ -126,7 +126,7 @@ export default function VehicleData() {
               <option key={index} value={suggestion} />
             ))}
           </datalist>
-          <div className='justify-center'>
+          <div className='justify-center mt-4'>
             <button type="submit" className="focus:outline-none focus:ring focus:ring-blue-300 w-20 m-2 bg-blue-600 text-white p-2 mr-2 rounded-md hover:">Search</button>
             <button type="button" onClick={clearInput} className="focus:outline-none focus:ring focus:ring-blue-300 w-20 m-2 bg-blue-600 text-white p-2  rounded-md">Clear</button>
           </div>
@@ -215,10 +215,10 @@ export default function VehicleData() {
         </div>
         <div className=" md:w-2/5  bg-slate-800 border border-slate-500  rounded-md m-2 mb-4 ">
           <h2 className="text-xl font-semibold mb-4 p-2 text-center border-b border-slate-500">MOT History</h2>
-          <ul className=" mb-4 ">
+          <ul className=" mb-4  ">
             {motDetails ? (
               motDetails.map((test: MotTest, index: number) => (
-                <li key={index} className="mb-4 p-4  bg-slate-800   border-b last:border-b-0 last:rounded-md">
+                <li key={index} className="mb-4 p-4   bg-slate-800  border-b last:border-b-0 last:rounded-md">
                   <span className='text-sm'>Test date: </span>
                   <span className="font-semibold">
                   {new Date(test.completedDate).toLocaleDateString('en-GB')}</span>
@@ -240,8 +240,8 @@ export default function VehicleData() {
               ))
             ) : (
               [...Array(3)].map((_, index) => (
-                <li key={index} className="mb-4 p-2 pb-4 bg-slate-700 last:rounded-md border-b last:border-b-0 ">
-                  <div >Test date<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse "></p></div>
+                <li key={index} className="mb-4 p-2 pb-4 bg-slate-800 last:rounded-md border-b last:border-b-0 ">
+                  <div >Test date<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div >Result<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div >Mileage<p className="h-6 bg-sky-700 rounded w-1/4 mb-2 animate-pulse"></p></div>
                   <div className="space-y-2 mt-4">
