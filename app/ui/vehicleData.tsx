@@ -107,9 +107,9 @@ export default function VehicleData() {
   return (
     <div className=" w-full ">
       <div className="p-2  mt-2 md:mt-2 md:p-2">
-        <div className=" mb-4 text-center justify-center">
-          <span className="font-bold text-2xl text-blue-50 bg-blue-800 p-2 pl-4 ">Vehicle & MOT</span>
-          <span className="font-bold text-2xl text-blue-800 bg-blue-50 p-2 pr-4 ">Lookup</span>
+        <div className="mb-4 mx-auto text-center justify-center   md:w-1/2">
+          <span className="font-bold text-xl text-blue-50 bg-blue-800 pl-4 p-1 md:pl-8 md:p-2 md:text-2xl">Vehicle & MOT</span>
+          <span className="font-bold text-xl text-blue-800 bg-blue-50 pr-4 p-1 md:pr-8 md:p-2 md:text-2xl">Lookup</span>
         </div>
         <form onSubmit={handleSubmit} className="text-center mt-8">
           <input
@@ -117,7 +117,7 @@ export default function VehicleData() {
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
             placeholder="enter VRN"
-            className="w-3/6 h-16 placeholder:font-mono bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2"
+            className="w-4/6 h-16 placeholder:font-mono bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2 pl-4 "
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='
