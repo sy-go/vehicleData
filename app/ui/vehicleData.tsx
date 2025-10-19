@@ -117,7 +117,7 @@ export default function VehicleData() {
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value.toUpperCase())}
             placeholder="enter VRN"
-            className="w-3/6 h-16 placeholder:text-sm bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2"
+            className="w-3/6 h-16 placeholder:font-mono bg-amber-400 text-2xl text-black   text-center font-extrabold placeholder-gray-500 rounded-md md:text-2xl md:w-48 p-2"
             list="regSuggestions"
           />
           <datalist id="regSuggestions" className='
